@@ -2,9 +2,13 @@
     <string name="app_name">Hop Test</string>
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="nop_leg">Nop</string>
     <string name="op_leg">Op</string>
     <string name="result">RESULT</string>
+
+    <string name="title_single_leg">Single Leg For Distance</string>
+    <string name="title_timed">Timed One Legged</string>
+    <string name="title_triple_hop_for_Distance">Triple Hop For Distance</string>
+    <string name="title_crossover">Crossover Hop</string>
 </resources>

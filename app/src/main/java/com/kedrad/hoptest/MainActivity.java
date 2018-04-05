@@ -1,5 +1,6 @@
 package com.kedrad.hoptest;
 
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,15 +12,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
-public class MainActivity extends AppCompatActivity implements SingleLegHopForDistanceFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements SingleLegHopForDistanceFragment.OnFragmentInteractionListener,
+        TimedOneLeggedHopFragment.OnFragmentInteractionListener, TripleHopForDistanceFragment.OnFragmentInteractionListener,
+        CrossoverHopFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -41,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Setting screen orientation to portrait
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -57,6 +59,45 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        //Changing title in the toolbar for the name of the first test and then changing it on every swipe.
+        toolbar.setTitle(R.string.title_single_leg);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Toolbar toolbar = findViewById(R.id.toolbar);
+
+                switch (position){
+                    case 0:
+                        toolbar.setTitle(R.string.title_single_leg);
+                        break;
+                    case 1:
+                        toolbar.setTitle(R.string.title_timed);
+                        break;
+                    case 2:
+                        toolbar.setTitle(R.string.title_triple_hop_for_Distance);
+                        break;
+                    case 3:
+                        toolbar.setTitle(R.string.title_crossover);
+                        break;
+                    default:
+                        toolbar.setTitle(R.string.title_single_leg);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -85,40 +126,7 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -133,8 +141,19 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return SingleLegHopForDistanceFragment.newInstance("`","2");//PlaceholderFragment.newInstance(position + 1);
+
+            switch (position){
+                case 0:
+                    return SingleLegHopForDistanceFragment.newInstance("`","2");
+                case 1:
+                    return TimedOneLeggedHopFragment.newInstance("", "");
+                case 2:
+                    return TripleHopForDistanceFragment.newInstance("", "");
+                case 3:
+                    return CrossoverHopFragment.newInstance("", "");
+                default:
+                    return SingleLegHopForDistanceFragment.newInstance("`","2");
+            }
         }
 
         @Override
@@ -142,11 +161,16 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
             // Show 4 total pages.
             return 4;
         }
+
     }
+
+
+
 
     @Override
     public void onFragmentInteraction(Uri uri){
-        //you can leave it empty
     }
+
+
 
 }
