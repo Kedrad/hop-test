@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hop Test</string>
+    <string name="result">WYNIK</string>
+    <string name="title_single_leg">Skok na jednej nodze na odległość</string>
+    <string name="title_timed">Skoki jednonóż na czas (6 m)</string>
+    <string name="title_triple_hop_for_Distance">Trójskok</string>
+    <string name="title_crossover">Skoki jednonóż nad linią na dystans</string>
+    <string name="empty_edittexts_message">Podaj wszystkie pomiary!</string>
+</resources>

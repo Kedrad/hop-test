@@ -3,12 +3,14 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="nop_leg">Nop</string>
-    <string name="op_leg">Op</string>
+    <string name="nop_leg" translatable="false">Nop</string>
+    <string name="op_leg" translatable="false">Op</string>
     <string name="result">RESULT</string>
 
     <string name="title_single_leg">Single Leg For Distance</string>
     <string name="title_timed">Timed One Legged</string>
     <string name="title_triple_hop_for_Distance">Triple Hop For Distance</string>
     <string name="title_crossover">Crossover Hop</string>
+
+    <string name="empty_edittexts_message">Provide all measurements!</string>
 </resources>

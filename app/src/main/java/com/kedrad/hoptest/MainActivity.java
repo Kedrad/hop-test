@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 public class MainActivity extends AppCompatActivity implements SingleLegHopForDistanceFragment.OnFragmentInteractionListener,
         TimedOneLeggedHopFragment.OnFragmentInteractionListener, TripleHopForDistanceFragment.OnFragmentInteractionListener,
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    private int currentFragment = 0;
+    private Fragment[] fragments = new Fragment[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +61,53 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                hideKeyboard();
+
+                //Calling appropriate methods in the instance of the fragment that is currently displayed to get te result.
+                switch (currentFragment){
+                    case 0:
+                        SingleLegHopForDistanceFragment f1 = (SingleLegHopForDistanceFragment) fragments[0];
+                        if(f1.validateInput())
+                            f1.calculateResult();
+                        else
+                            Snackbar.make(view, R.string.empty_edittexts_message, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        break;
+                    case 1:
+                        TimedOneLeggedHopFragment f2 = (TimedOneLeggedHopFragment) fragments[1];
+                        if(f2.validateInput())
+                            f2.calculateResult();
+                        else
+                            Snackbar.make(view, R.string.empty_edittexts_message, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        break;
+                    case 2:
+                        TripleHopForDistanceFragment f3 = (TripleHopForDistanceFragment) fragments[2];
+                        if(f3.validateInput())
+                            f3.calculateResult();
+                        else
+                            Snackbar.make(view, R.string.empty_edittexts_message, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        break;
+                    case 3:
+                        TripleHopForDistanceFragment f4 = (TripleHopForDistanceFragment) fragments[3];
+                        if(f4.validateInput())
+                            f4.calculateResult();
+                        else
+                            Snackbar.make(view, R.string.empty_edittexts_message, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        break;
+                    default:
+                        SingleLegHopForDistanceFragment f5 = (SingleLegHopForDistanceFragment) fragments[0];
+                        if(f5.validateInput())
+                            f5.calculateResult();
+                        else
+                            Snackbar.make(view, R.string.empty_edittexts_message, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        break;
+                }
+
+
             }
         });
 
@@ -79,17 +128,22 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
                 switch (position){
                     case 0:
                         toolbar.setTitle(R.string.title_single_leg);
+                        currentFragment = 0;
                         break;
                     case 1:
                         toolbar.setTitle(R.string.title_timed);
+                        currentFragment = 1;
                         break;
                     case 2:
+                        currentFragment = 2;
                         toolbar.setTitle(R.string.title_triple_hop_for_Distance);
                         break;
                     case 3:
+                        currentFragment = 3;
                         toolbar.setTitle(R.string.title_crossover);
                         break;
                     default:
+                        currentFragment = 0;
                         toolbar.setTitle(R.string.title_single_leg);
                         break;
                 }
@@ -144,15 +198,20 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
 
             switch (position){
                 case 0:
-                    return SingleLegHopForDistanceFragment.newInstance("`","2");
+                    fragments[0] = SingleLegHopForDistanceFragment.newInstance();
+                    return fragments[0];
                 case 1:
-                    return TimedOneLeggedHopFragment.newInstance("", "");
+                    fragments[1] = TimedOneLeggedHopFragment.newInstance();
+                    return fragments[1];
                 case 2:
-                    return TripleHopForDistanceFragment.newInstance("", "");
+                    fragments[2] = TripleHopForDistanceFragment.newInstance();
+                    return fragments[2];
                 case 3:
-                    return CrossoverHopFragment.newInstance("", "");
+                    fragments[3] = CrossoverHopFragment.newInstance();
+                    return fragments[3];
                 default:
-                    return SingleLegHopForDistanceFragment.newInstance("`","2");
+                    fragments[0] = SingleLegHopForDistanceFragment.newInstance();
+                    return fragments[0];
             }
         }
 
@@ -165,7 +224,10 @@ public class MainActivity extends AppCompatActivity implements SingleLegHopForDi
     }
 
 
-
+    void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
 
     @Override
     public void onFragmentInteraction(Uri uri){

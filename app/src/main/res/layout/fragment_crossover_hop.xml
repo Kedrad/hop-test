@@ -36,7 +36,7 @@
                 android:id="@+id/editTextOp1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:singleLine="true"
                 android:digits="0123456789.,"
                 android:ems="4"
                 android:hint="0"
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="m"
+                android:text="cm"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -75,12 +75,13 @@
                 android:hint="0"
                 android:inputType="numberDecimal"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="m"
+                android:text="cm"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -120,12 +121,13 @@
                 android:hint="0"
                 android:inputType="numberDecimal"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="m"
+                android:text="cm"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -153,35 +155,21 @@
                 android:hint="0"
                 android:inputType="numberDecimal"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="m"
+                android:text="cm"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
         </LinearLayout>
 
-        <!-- <EditText
-             android:id="@+id/editTextResult"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerHorizontal="true"
-             android:layout_marginTop="300dp"
-             android:digits="0123456789.,"
-             android:ems="4"
-             android:hint="0"
-             android:inputType="text"
-             android:selectAllOnFocus="false"
-             android:textAlignment="center"
-             android:textColor="@android:color/black"
-             android:textSize="72sp"
-             android:clickable="false"
-             android:focusable="false"/>
-        -->
+
         <TextView
+            android:id="@+id/textViewResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"

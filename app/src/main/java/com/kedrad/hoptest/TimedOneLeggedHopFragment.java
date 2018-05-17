@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.Locale;
 
 
 /**
@@ -18,14 +22,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class TimedOneLeggedHopFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //Result of dividing operated leg's average by not operated leg's average
+    public float result;
+
+    //Views
+    private EditText etOpLeg1, etOpLeg2, etNopLeg1, etNopLeg2;
+    private TextView tvResult;
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,34 +40,30 @@ public class TimedOneLeggedHopFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment TimedOneLeggedHopFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static TimedOneLeggedHopFragment newInstance(String param1, String param2) {
-        TimedOneLeggedHopFragment fragment = new TimedOneLeggedHopFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static TimedOneLeggedHopFragment newInstance() {
+        return new TimedOneLeggedHopFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_timed_one_legged_hop, container, false);
+        View view = inflater.inflate(R.layout.fragment_timed_one_legged_hop, container, false);
+
+        etOpLeg1 = view.findViewById(R.id.editTextOp1);
+        etOpLeg2 = view.findViewById(R.id.editTextOp2);
+        etNopLeg1 = view.findViewById(R.id.editTextNop1);
+        etNopLeg2 = view.findViewById(R.id.editTextNop2);
+        tvResult = view.findViewById(R.id.textViewResult);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -89,6 +88,35 @@ public class TimedOneLeggedHopFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    //Method for checking if input in all four EditTexts is valid
+    public boolean validateInput(){
+        EditText[] et = new EditText[] {etOpLeg1, etOpLeg2, etNopLeg1, etNopLeg2};
+
+        for(int i = 0; i < et.length; i++){
+            if(et[i].getText().toString().length() <= 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void calculateResult(){
+        //Getting measurements for both legs from EditTexts
+        float opLeg1 = Float.parseFloat(etOpLeg1.getText().toString());
+        float opLeg2 = Float.parseFloat(etOpLeg2.getText().toString());
+        float nopLeg1 = Float.parseFloat(etNopLeg1.getText().toString());
+        float nopLeg2 = Float.parseFloat(etNopLeg2.getText().toString());
+
+        //Calculating average
+        float opLegAverage = (opLeg1 + opLeg2) / 2;
+        float nopLegAverage = (nopLeg1 + nopLeg2) / 2;
+
+        result = opLegAverage / nopLegAverage;
+
+        //Showing the result
+        tvResult.setText(String.format(Locale.US,"%.2f", result));
     }
 
     /**
